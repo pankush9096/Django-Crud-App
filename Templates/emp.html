@@ -1,0 +1,28 @@
+{% load staticfiles %}
+
+<html>
+
+<head>
+    <!--<link href= ”{% static 'css/styles.css' %}" rel=”stylesheet”  type="text/css" />-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+
+</head>
+
+<body>
+
+<form method="Post">
+
+<div class="container">
+
+    <h1 class="h1">PLease fill Employee registeration Form</h1>
+    {{ form.as_p }}  {% csrf_token %}
+    <!--template tag getting data from form variable of form_view class-->
+    <input type="submit" value="Submit" class="Button">
+</div>
+
+</form>
+
+</body>
+</html>
