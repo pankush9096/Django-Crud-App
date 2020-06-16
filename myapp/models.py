@@ -5,8 +5,10 @@ from django.db import models
 
 class Login(models.Model):
     # table creation and models.Model is passed everytime to inherit from pre made classes in django admin page.
+
     username = models.CharField(max_length=30, unique=True)
     # attribute or column name of table, Primary Key 'ID' will already be generated.
+
     email = models.EmailField(max_length=30, unique=True)
     password = models.CharField(max_length=30)
     DOB =  models.DateField()

@@ -6,6 +6,9 @@ from .serializers import LoginSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Register
+from rest_framework import status
+from rest_framework.parsers import JSONParser
+from rest_framework.renderers import JSONRenderer
 
 # Create your views here.
 
@@ -60,10 +63,57 @@ def thanks(request):
 
 
 class LoginList(APIView):
+
+
+
     def get(self,request):
         values = Register.objects.all()
         Serializer = LoginSerializer(values, many= True)
         return Response(Serializer.data)
+
+    def post(self, request):
+
+        # values = self.get_object()
+        serializer = LoginSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            json = JSONRenderer().render(serializer.data)
+            return Response(json, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class Update_LoginList(APIView):
+
+    queryset = Register.objects.all()
+    serializer_class = LoginSerializer
+
+    def get_object(self, pk):
+        try:
+            return Register.objects.get(pk=pk)
+        except Register.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def get(self,request, pk):
+        values = self.get_object(pk)
+        Serializer = LoginSerializer(values)
+        return Response(Serializer.data)
+
+    def put(self, request, pk):
+        values = self.get_object(pk)
+        serializer = LoginSerializer(values,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            json = JSONRenderer().render(serializer.data)
+            return Response(json, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        value = self.get_object(pk)
+        value.delete()
+        values = Register.objects.all()
+        serializer = LoginSerializer(values, many= True)
+        return Response(serializer.data)
+
 
 def json(request): # rendering json type data
     data= {1:{'Name': 'Pankush', 'Age': 29}, 2: { 'Name': 'Aashi', 'Age': 30 }}

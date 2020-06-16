@@ -11,6 +11,7 @@ urlpatterns = [
     path('register', views.form_view, name= 'register'),
     path('thanks', views.thanks, name= 'thanks'),
     path('api/', views.LoginList.as_view()),
+    path('api/<int:pk>', views.Update_LoginList.as_view()),
     path('json', views.json),
 
     # name is non essential parameter whcih will allocate memory to subjected view
