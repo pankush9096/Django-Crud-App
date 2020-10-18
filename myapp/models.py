@@ -20,7 +20,7 @@ class Login(models.Model):
         ('NA', 'Not Applicable')
     )
 
-    gender = models.CharField(max_length=1, choices=Gender, default= 'NA')
+    gender = models.CharField(max_length=10, choices=Gender, default= 'NA')
 
     def __str__(self):
         # as record added in login will show as object number so this function will return it as name.
